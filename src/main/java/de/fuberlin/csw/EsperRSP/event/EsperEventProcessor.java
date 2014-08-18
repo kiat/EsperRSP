@@ -1,5 +1,7 @@
 package de.fuberlin.csw.EsperRSP.event;
 
+import java.util.concurrent.TimeUnit;
+
 import org.apache.log4j.Logger;
 
 import com.espertech.esper.client.Configuration;
@@ -24,7 +26,7 @@ public class EsperEventProcessor extends Thread {
 
 	static EPAdministrator admin;
 	EPRuntime runtime;
-	
+
 	String name;
 
 	/** The underlying query describing the relationship */
@@ -68,13 +70,21 @@ public class EsperEventProcessor extends Thread {
 
 		while (true) {
 			TripleEvent currentEvent = ep.nextTuple();
-			runtime.sendEvent(currentEvent);
 
-			
-//			System.out.println(event.subject + "  " + event.predicate + " " + event.object);
+			try {
+//				TimeUnit.SECONDS.sleep(1); // send an Event every Second 
+				TimeUnit.MILLISECONDS.sleep(10);
+
+			} catch (InterruptedException e) {
+				log.error("InterruptedException", e);
+			}
+
+			runtime.sendEvent(currentEvent);
+//log.debug(currentEvent.subject);
+			// System.out.println(event.subject + "  " + event.predicate + " " +
+			// event.object);
 
 		}
-		
 
 	}
 

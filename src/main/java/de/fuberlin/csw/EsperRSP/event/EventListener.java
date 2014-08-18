@@ -36,32 +36,32 @@ public class EventListener implements UpdateListener {
 				if (newEvent instanceof BeanEventBean) {
 
 					TripleEvent sEvent = (TripleEvent) newEvent.getUnderlying();
-					System.out.println(sEvent.subject + "  " + sEvent.predicate + "  " + sEvent.object);
+					System.out.println("MATCH:  Triple "+ sEvent.subject + "  " + sEvent.predicate + "  " + sEvent.object);
 
-					// } else {
-					//
-					// MapEventBean bean = (MapEventBean) newEvent;
-					//
-					// HashMap<?, ?> map = (HashMap<?, ?>) bean.getUnderlying();
-					//
-					// for (Map.Entry<?, ?> entry : map.entrySet()) {
-					//
-					// BeanEventBean tmp = (BeanEventBean) entry.getValue();
-					//
-					// // check whether event is instance of
-					// if (tmp.getUnderlying().getClass() == TripleEvent.class)
-					// {
-					// // retrieve the actual event from bean
-					//
-					// TripleEvent sEvent = (TripleEvent) tmp.getUnderlying();
-					//
-					// // here we send the enriched Event
-					// System.out.println(sEvent);
-					// } else {
-					//
-					// log.debug("Event received not of type StockEvent.class!");
-					// }
-					// } // END OF FOR
+					 } else {
+					
+					 MapEventBean bean = (MapEventBean) newEvent;
+					
+					 HashMap<?, ?> map = (HashMap<?, ?>) bean.getUnderlying();
+					
+					 for (Map.Entry<?, ?> entry : map.entrySet()) {
+					
+					 BeanEventBean tmp = (BeanEventBean) entry.getValue();
+					
+					 // check whether event is instance of
+					 if (tmp.getUnderlying().getClass() == TripleEvent.class)
+					 {
+					 // retrieve the actual event from bean
+					
+					 TripleEvent sEvent = (TripleEvent) tmp.getUnderlying();
+					
+					 // here we send the enriched Event
+						System.out.println("MATCH:  Triple "+ sEvent.subject + "  " + sEvent.predicate + "  " + sEvent.object);
+					 } else {
+					
+					 log.debug("Event received not of type StockEvent.class!");
+					 }
+					 } // END OF FOR
 				}
 			}
 
