@@ -11,18 +11,22 @@ public class MainStartTest {
 
 	//  Who is where? every 1 min?
 	static String query1="select * from TripleEvent(predicate='isIn').win:time(60 sec)";
+
 	static String query1_1="select * from TripleEvent(subject='Person-a').win:time(1 sec)";
 	static String query1_2="select * from TripleEvent(object='Room-a').win:time(1 sec)";
 
-	// Find person who has been to more than 5 different rooms during the past 5 minutes (relies on SPARQL 1.1 aggregation)
+	// Find person who has been to more than 3 different rooms during the past 5 minutes (relies on SPARQL 1.1 aggregation)
+	static String query2="select * from pattern [every (a=TripleEvent ->  b=TripleEvent ->  c=TripleEvent) where timer:within(5 min)] where a.subject=b.subject   and "
+			+ "b.subject=c.subject  and  a.object!=b.object and  b.object!=c.object and a.object!=c.object  ";
+	
 	static String query2_1="select * from pattern [ every a=TripleEvent(subject='Person-a')  ]";
 	static String query2_2="select * from pattern [ every-distinct(a.object) a=TripleEvent(subject='Person-a')  ]";
 
-	static String query2="select * from pattern [every (a=TripleEvent ->  b=TripleEvent ->  c=TripleEvent)] where a.subject=b.subject   and "
-			+ "b.subject=c.subject  and  a.object!=b.object and  b.object!=c.object and a.object!=c.object";
+
+	
+
 	
 	
-	// select * from pattern [ every a=StockEvent(value('industry_§§§§_http://dbpedia.org/resource/Computer')=true)]
 	
 	public static void main(String[] args) {
 		PropertyConfigurator.configure("log4j.properties");
