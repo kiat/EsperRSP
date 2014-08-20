@@ -53,7 +53,7 @@ public class MainStartTest {
 	// This query relies on a SEQ operator and on counting the repetition of
 	// such sequence.
 	
-	static String query7 = "select * from pattern [ every ( a=TripleEvent -> b=TripleEvent  ->  d=TripleEvent -> c=TripleEvent -> e=TripleEvent -> f=TripleEvent )  ]"
+	static String query7 = "select * from pattern [ every ( a=TripleEvent -> b=TripleEvent  ->  d=TripleEvent -> c=TripleEvent -> e=TripleEvent -> f=TripleEvent )   where timer:within(10 min)]"
 			+ "where a.subject!=b.subject and a.object=b.object and   c.subject!=d.subject and c.object=d.object  and   e.subject!=f.subject and e.object=f.object  "
 			+ "and a.subject=d.subject  and b.subject=c.subject and d.subject=e.subject and c.subject=f.subject "
 			+ "and a.predicate='isIn' and b.predicate='isIn' and c.predicate='isIn' and d.predicate='isIn' and e.predicate='isIn' and f.predicate='isIn' ";
