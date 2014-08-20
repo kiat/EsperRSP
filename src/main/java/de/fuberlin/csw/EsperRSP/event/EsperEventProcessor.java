@@ -70,21 +70,14 @@ public class EsperEventProcessor extends Thread {
 		log.info("started " + name);
 
 		while (true) {
-			TripleEvent currentEvent = ep.nextTuple();
-
-			try {
-//				TimeUnit.SECONDS.sleep(1); // send an Event every Second 
-				TimeUnit.MILLISECONDS.sleep(10);
-
-			} catch (InterruptedException e) {
-				log.error("InterruptedException", e);
-			}
-
-			runtime.sendEvent(currentEvent);
-//log.debug(currentEvent.subject);
-			// System.out.println(event.subject + "  " + event.predicate + " " +
-			// event.object);
-
+			// Send a triple  (person isIn room)
+			TripleEvent eventPerson_room = ep.nextTuple();
+			runtime.sendEvent(eventPerson_room);
+			
+//			// Send a triple  (person hasDegree  Doctorate/Master)
+//			TripleEvent eventPerson_degree= ep.nextTupleDegree();
+//			runtime.sendEvent(eventPerson_degree);
+			
 		}
 
 	}

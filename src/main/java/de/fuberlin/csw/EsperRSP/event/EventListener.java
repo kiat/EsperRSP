@@ -15,7 +15,7 @@ public class EventListener implements UpdateListener {
 	public boolean flag = false;
 
 	public void update(EventBean[] newEvents, EventBean[] oldEvents) {
-		System.out.println("\n NEW COMPLEX EVENT");
+		System.out.println("\nNEW COMPLEX EVENT");
 
 		if (newEvents != null) {
 			for (EventBean newEvent : newEvents) {
@@ -24,7 +24,7 @@ public class EventListener implements UpdateListener {
 				if (newEvent instanceof BeanEventBean) {
 
 					TripleEvent sEvent = (TripleEvent) newEvent.getUnderlying();
-					System.out.println("MATCH:  Triple " + sEvent.subject + "  " + sEvent.predicate + "  " + sEvent.object);
+					System.out.println("MATCH Triple:  s:" + sEvent.subject + " ,  p:" + sEvent.predicate + " ,  o: " + sEvent.object);
 
 				} else if (newEvent instanceof EventBean) {
 
@@ -43,16 +43,18 @@ public class EventListener implements UpdateListener {
 								TripleEvent sEvent = (TripleEvent) tmp.getUnderlying();
 
 								// here we send the enriched Event
-								System.out.println("MATCH:  Triple " + sEvent.subject + "  " + sEvent.predicate + "  " + sEvent.object);
+								System.out.println("MATCH Triple:  s:" + sEvent.subject + " ,  p:" + sEvent.predicate + " ,  o: " + sEvent.object);
 							}
 						}
 					} // END OF FOR
 				} else {
 					System.err.println("ERROR");
 					log.debug("Event received not of type TripleEvent.class!");
-
 				}
 			}
+		}else {
+			System.err.println("OBJECT is null");
+			log.debug("newEvents are null");
 		}
 	}
 }
