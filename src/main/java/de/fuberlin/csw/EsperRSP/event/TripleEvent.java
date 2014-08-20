@@ -23,16 +23,27 @@ public class TripleEvent implements Serializable {
 		this.object = o;
 	}
 
-	public boolean getSubject(String value) {
+	public String getSubject() {
+		return subject;
+	}
+
+	public String getPredicate() {
+		return predicate;
+	}
+
+	public String getObject() {
+		return object;
+	}
+
+	public boolean getIssubject(String value) {
 
 		if (this.subject.equals(value)) {
 			return true;
 		} else
 			return false;
 	}
-	
-	
-	public boolean getPredicate(String value) {
+
+	public boolean getIspredicate(String value) {
 
 		if (this.predicate.equals(value)) {
 			return true;
@@ -40,7 +51,7 @@ public class TripleEvent implements Serializable {
 			return false;
 	}
 
-	public boolean getObject(String value) {
+	public boolean getIsobject(String value) {
 
 		if (this.object.equals(value)) {
 			return true;

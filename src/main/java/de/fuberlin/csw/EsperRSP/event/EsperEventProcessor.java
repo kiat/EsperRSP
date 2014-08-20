@@ -54,6 +54,7 @@ public class EsperEventProcessor extends Thread {
 
 		epService = EPServiceProviderManager.getProvider(name, configuration);
 		// EPServiceProviderManager.getDefaultProvider(configuration);
+		
 		admin = epService.getEPAdministrator();
 		runtime = epService.getEPRuntime();
 

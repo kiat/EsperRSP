@@ -12,22 +12,10 @@ import com.espertech.esper.event.map.MapEventBean;
 public class EventListener implements UpdateListener {
 	static Logger log = Logger.getLogger(EventListener.class);
 
-	int eventCount;
-	String name;
-
-	/** denotes the start time of flush */
-	long startTime = 0;
-
-	/** denotes the end time of flush */
-	long endTime = 0;
-
-	/** denotes the elapsed time between flushes */
-	long elapsedTime = 0;
-
 	public boolean flag = false;
 
 	public void update(EventBean[] newEvents, EventBean[] oldEvents) {
-		eventCount++;
+		System.out.println("\n NEW COMPLEX EVENT");
 
 		if (newEvents != null) {
 			for (EventBean newEvent : newEvents) {
@@ -36,37 +24,35 @@ public class EventListener implements UpdateListener {
 				if (newEvent instanceof BeanEventBean) {
 
 					TripleEvent sEvent = (TripleEvent) newEvent.getUnderlying();
-					System.out.println("MATCH:  Triple "+ sEvent.subject + "  " + sEvent.predicate + "  " + sEvent.object);
+					System.out.println("MATCH:  Triple " + sEvent.subject + "  " + sEvent.predicate + "  " + sEvent.object);
 
-					 } else {
-					
-					 MapEventBean bean = (MapEventBean) newEvent;
-					
-					 HashMap<?, ?> map = (HashMap<?, ?>) bean.getUnderlying();
-					
-					 for (Map.Entry<?, ?> entry : map.entrySet()) {
-					
-					 BeanEventBean tmp = (BeanEventBean) entry.getValue();
-					
-					 // check whether event is instance of
-					 if (tmp.getUnderlying().getClass() == TripleEvent.class)
-					 {
-					 // retrieve the actual event from bean
-					
-					 TripleEvent sEvent = (TripleEvent) tmp.getUnderlying();
-					
-					 // here we send the enriched Event
-						System.out.println("MATCH:  Triple "+ sEvent.subject + "  " + sEvent.predicate + "  " + sEvent.object);
-					 } else {
-					
-					 log.debug("Event received not of type StockEvent.class!");
-					 }
-					 } // END OF FOR
+				} else if (newEvent instanceof EventBean) {
+
+					MapEventBean bean = (MapEventBean) newEvent;
+					HashMap<?, ?> map = (HashMap<?, ?>) bean.getUnderlying();
+
+					for (Map.Entry<?, ?> entry : map.entrySet()) {
+
+						if (entry.getValue() instanceof BeanEventBean) {
+
+							BeanEventBean tmp = (BeanEventBean) entry.getValue();
+
+							// check whether event is instance of
+							if (tmp.getUnderlying().getClass() == TripleEvent.class) {
+								// retrieve the actual event from bean
+								TripleEvent sEvent = (TripleEvent) tmp.getUnderlying();
+
+								// here we send the enriched Event
+								System.out.println("MATCH:  Triple " + sEvent.subject + "  " + sEvent.predicate + "  " + sEvent.object);
+							}
+						}
+					} // END OF FOR
+				} else {
+					System.err.println("ERROR");
+					log.debug("Event received not of type TripleEvent.class!");
+
 				}
 			}
-
 		}
-
 	}
-
 }
