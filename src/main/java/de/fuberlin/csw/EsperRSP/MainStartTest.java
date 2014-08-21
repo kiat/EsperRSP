@@ -31,7 +31,8 @@ public class MainStartTest {
 
 	// Query 3: Detect two different people in the same room for at least three
 	// seconds
-	static String query3 = "select * from pattern [every  (a=TripleEvent -> b=TripleEvent) where timer:within(3 sec)] where a.subject!=b.subject and  a.object=b.object ";
+	static String query3 = "select * from pattern [every  a=TripleEvent -> every b=TripleEvent where timer:within(3 sec)] where a.subject!=b.subject and  a.object=b.object "
+			+ "and a.predicate='isIn' and b.predicate='isIn' ";
 
 	// Query 4: Detect persons who has entered either room-a or room-b in the
 	// past 5 min
@@ -69,7 +70,7 @@ public class MainStartTest {
 		EsperEventProcessor ep = new EsperEventProcessor();
 		EventListener my_listener = new EventListener();
 
-		ep.addPattern(query2, my_listener);
+		ep.addPattern(query3, my_listener);
 		ep.start();
 
 	}
