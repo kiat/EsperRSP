@@ -70,7 +70,7 @@ public class MainStartTest {
 		EsperEventProcessor ep = new EsperEventProcessor();
 		EventListener my_listener = new EventListener();
 
-		ep.addPattern(query3, my_listener);
+		ep.addPattern(query7, my_listener);
 		ep.start();
 
 	}
