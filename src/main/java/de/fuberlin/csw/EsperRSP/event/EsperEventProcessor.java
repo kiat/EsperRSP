@@ -1,7 +1,5 @@
 package de.fuberlin.csw.EsperRSP.event;
 
-import java.util.concurrent.TimeUnit;
-
 import org.apache.log4j.Logger;
 
 import com.espertech.esper.client.Configuration;
@@ -28,15 +26,6 @@ public class EsperEventProcessor extends Thread {
 	EPRuntime runtime;
 
 	String name;
-
-	/** The underlying query describing the relationship */
-	String patternQuery;
-
-	/** The operators that describe sequence of events in pattern */
-	String[] patternOps;
-
-	/** The size of the sliding window of patterns */
-	String patternWindowSize;
 
 	EventListener listener;
 
