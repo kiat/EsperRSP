@@ -69,14 +69,16 @@ public class EsperEventProcessor extends Thread {
 		EventProducer ep = new EventProducer();
 		log.info("started " + name);
 
+		
+		
 		while (true) {
 			// Send a triple  (person isIn room)
 			TripleEvent eventPerson_room = ep.nextTuple();
 			runtime.sendEvent(eventPerson_room);
 			
-//			// Send a triple  (person hasDegree  Doctorate/Master)
-//			TripleEvent eventPerson_degree= ep.nextTupleDegree();
-//			runtime.sendEvent(eventPerson_degree);
+			// Send a triple  (person hasDegree  Doctorate/Master)
+			TripleEvent eventPerson_degree= ep.nextTupleDegree();
+			runtime.sendEvent(eventPerson_degree);
 			
 		}
 

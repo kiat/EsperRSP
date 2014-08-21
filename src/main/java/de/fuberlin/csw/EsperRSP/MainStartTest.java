@@ -22,8 +22,9 @@ public class MainStartTest {
 
 	// Query 2: Find person who has been to more than 3 different rooms during
 	// the past 5 minutes (relies on SPARQL 1.1 aggregation)
-	static String query2 = "select * from pattern [every (a=TripleEvent ->  b=TripleEvent ->  c=TripleEvent) where timer:within(5 min)] where a.subject=b.subject   and "
-			+ "b.subject=c.subject  and  a.object!=b.object and  b.object!=c.object and a.object!=c.object  ";
+	static String query2 = "select * from pattern [every a=TripleEvent -> every b=TripleEvent -> every c=TripleEvent where timer:within(5 min)] where a.subject=b.subject   and "
+			+ "b.subject=c.subject  and  a.object!=b.object and  b.object!=c.object and a.object!=c.object "
+			+ "and a.predicate='isIn' and b.predicate='isIn' and c.predicate='isIn' ";
 
 	static String query2_1 = "select * from pattern [ every a=TripleEvent(subject='Person-a')  ]";
 	static String query2_2 = "select * from pattern [ every-distinct(a.object) a=TripleEvent(subject='Person-a')  ]";
@@ -43,7 +44,7 @@ public class MainStartTest {
 	// Query 6: Provide pairs of rooms, e.g. (room-a, room-b), where Person-a
 	// and Person-b have been together such that they are first in a room
 	// and then following each other in another room within 5 minutes.
-	static String query6 = "select * from pattern [every (a=TripleEvent -> b=TripleEvent ->   c=TripleEvent ->  d=TripleEvent)   where timer:within(5 min) ]"
+	static String query6 = "select * from pattern [every a=TripleEvent -> every b=TripleEvent -> every  c=TripleEvent -> every d=TripleEvent   where timer:within(5 min) ]"
 			+ "  where a.subject!=b.subject and a.object=b.object and a.subject=c.subject and b.subject=d.subject and c.object=d.object"
 			+ "  and a.predicate='isIn' and b.predicate='isIn' and c.predicate='isIn' and d.predicate='isIn' ";
 
@@ -53,7 +54,7 @@ public class MainStartTest {
 	// This query relies on a SEQ operator and on counting the repetition of
 	// such sequence.
 	
-	static String query7 = "select * from pattern [ every ( a=TripleEvent -> b=TripleEvent  ->  d=TripleEvent -> c=TripleEvent -> e=TripleEvent -> f=TripleEvent )   where timer:within(10 min)]"
+	static String query7 = "select * from pattern [ every  a=TripleEvent -> every b=TripleEvent  -> every  d=TripleEvent -> every c=TripleEvent -> every e=TripleEvent -> every f=TripleEvent    where timer:within(10 min)]"
 			+ "where a.subject!=b.subject and a.object=b.object and   c.subject!=d.subject and c.object=d.object  and   e.subject!=f.subject and e.object=f.object  "
 			+ "and a.subject=d.subject  and b.subject=c.subject and d.subject=e.subject and c.subject=f.subject "
 			+ "and a.predicate='isIn' and b.predicate='isIn' and c.predicate='isIn' and d.predicate='isIn' and e.predicate='isIn' and f.predicate='isIn' ";
@@ -68,7 +69,7 @@ public class MainStartTest {
 		EsperEventProcessor ep = new EsperEventProcessor();
 		EventListener my_listener = new EventListener();
 
-		ep.addPattern(query7, my_listener);
+		ep.addPattern(query2, my_listener);
 		ep.start();
 
 	}
